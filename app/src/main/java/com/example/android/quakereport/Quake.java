@@ -7,21 +7,21 @@ package com.example.android.quakereport;
 public class Quake {
 
     private String mPlace;
-    private String mDate;
-    private double mMagnitude;
+    private long mDate;
+    private String mMagnitude;
 
-    public Quake(double m , String p, String d) {
-        mMagnitude = m;
+    public Quake(String m , String p, long d) {
+        mMagnitude= m;
         mPlace = p;
         mDate = d;
 
     }
 
-    public double getmMagnitude() {
+    public String getmMagnitude() {
         return mMagnitude;
     }
 
-    public String getmDate() {
+    public long getmDate() {
         return mDate;
     }
 
@@ -29,11 +29,11 @@ public class Quake {
         return mPlace;
     }
 
-    public void setmDate(String mDate) {
+    public void setmDate(long mDate) {
         this.mDate = mDate;
     }
 
-    public void setmMagnitude(float mMagnitude) {
+    public void setmMagnitude(String mMagnitude) {
         this.mMagnitude = mMagnitude;
     }
 
