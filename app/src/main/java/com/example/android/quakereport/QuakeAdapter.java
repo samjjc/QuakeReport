@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -18,7 +19,9 @@ import java.util.Date;
 
 public class QuakeAdapter extends ArrayAdapter<Quake> {
 
-    public QuakeAdapter(Activity context, ArrayList<Quake> quakeAdapter){
+    private static final String LOCATION_SEPARATOR = " of ";
+
+    public QuakeAdapter(Activity context, ArrayList<Quake> quakeAdapter) {
         super(context, 0, quakeAdapter);
     }
 
@@ -33,11 +36,30 @@ public class QuakeAdapter extends ArrayAdapter<Quake> {
 
         Quake currentQuake = getItem(position);
 
+        DecimalFormat formatter = new DecimalFormat("0.0");
+
+
         TextView magnitudeTextView = (TextView) listItemView.findViewById(R.id.magnitude_text_view);
-        magnitudeTextView.setText(String.valueOf(currentQuake.getmMagnitude()));
+        magnitudeTextView.setText(String.valueOf(formatter.format(currentQuake.getmMagnitude())));
+
+        String originalLocation = currentQuake.getmPlace();
+        String place;
+        String offset;
+        if (originalLocation.contains(LOCATION_SEPARATOR)) {
+            String[] parts = originalLocation.split(LOCATION_SEPARATOR);
+            offset = parts[0] + LOCATION_SEPARATOR;
+            place = parts[1];
+        } else {
+            offset = "Near the";
+            place = originalLocation;
+        }
+
+        TextView offsetTextView = (TextView) listItemView.findViewById(R.id.offset_text_view);
+        offsetTextView.setText(offset);
 
         TextView placeTextView = (TextView) listItemView.findViewById(R.id.place_text_view);
-        placeTextView.setText(currentQuake.getmPlace());
+        placeTextView.setText(place);
+
 
         //Formatting the time and date
 

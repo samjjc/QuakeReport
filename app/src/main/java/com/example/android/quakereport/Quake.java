@@ -8,16 +8,16 @@ public class Quake {
 
     private String mPlace;
     private long mDate;
-    private String mMagnitude;
+    private double mMagnitude;
 
-    public Quake(String m , String p, long d) {
+    public Quake(double m , String p, long d) {
         mMagnitude= m;
         mPlace = p;
         mDate = d;
 
     }
 
-    public String getmMagnitude() {
+    public double getmMagnitude() {
         return mMagnitude;
     }
 
@@ -33,7 +33,7 @@ public class Quake {
         this.mDate = mDate;
     }
 
-    public void setmMagnitude(String mMagnitude) {
+    public void setmMagnitude(double mMagnitude) {
         this.mMagnitude = mMagnitude;
     }
 

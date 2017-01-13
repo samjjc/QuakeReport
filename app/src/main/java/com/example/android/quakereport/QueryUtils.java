@@ -54,7 +54,7 @@ public class QueryUtils {
             for (int i=0;i<jaryFeatures.length();i++){
                 JSONObject jobjEarthquake = jaryFeatures.getJSONObject(i);
                 JSONObject jobjProperties = jobjEarthquake.getJSONObject("properties");
-                String magnitude = jobjProperties.getString("mag");
+                double magnitude = jobjProperties.getDouble("mag");
                 String place = jobjProperties.getString("place");
                 long time = jobjProperties.getLong("time");
 
