@@ -40,7 +40,9 @@ public class QuakeAdapter extends ArrayAdapter<Quake> {
 
 
         TextView magnitudeTextView = (TextView) listItemView.findViewById(R.id.magnitude_text_view);
-        magnitudeTextView.setText(String.valueOf(formatter.format(currentQuake.getmMagnitude())));
+        magnitudeTextView.setText(formatter.format(currentQuake.getmMagnitude()));
+
+        
 
         String originalLocation = currentQuake.getmPlace();
         String place;
