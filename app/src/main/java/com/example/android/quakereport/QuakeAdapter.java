@@ -43,7 +43,7 @@ public class QuakeAdapter extends ArrayAdapter<Quake> {
         DecimalFormat formatter = new DecimalFormat("0.0");
 
 
-        TextView magnitudeTextView = (TextView) listItemView.findViewById(R.id.magnitude_text_view);
+        TextView magnitudeTextView = (TextView) listItemView.findViewById(R.id.magnitude);
 
         GradientDrawable magnitudeCircle = (GradientDrawable) magnitudeTextView.getBackground();
         int magnitudeColor = getMagnitudeColor(currentQuake.getmMagnitude());
@@ -67,10 +67,10 @@ public class QuakeAdapter extends ArrayAdapter<Quake> {
             place = originalLocation;
         }
 
-        TextView offsetTextView = (TextView) listItemView.findViewById(R.id.offset_text_view);
+        TextView offsetTextView = (TextView) listItemView.findViewById(R.id.location_offset);
         offsetTextView.setText(offset);
 
-        TextView placeTextView = (TextView) listItemView.findViewById(R.id.place_text_view);
+        TextView placeTextView = (TextView) listItemView.findViewById(R.id.primary_location);
         placeTextView.setText(place);
 
 
@@ -81,10 +81,10 @@ public class QuakeAdapter extends ArrayAdapter<Quake> {
         String dateToDisplay = formatDate(dateObject);
         String timeToDisplay = formatTime(dateObject);
 
-        TextView dateTextView = (TextView) listItemView.findViewById(R.id.date_text_view);
+        TextView dateTextView = (TextView) listItemView.findViewById(R.id.date);
         dateTextView.setText(dateToDisplay);
 
-        TextView timeTextView = (TextView) listItemView.findViewById(R.id.time_text_view);
+        TextView timeTextView = (TextView) listItemView.findViewById(R.id.time);
         timeTextView.setText(timeToDisplay);
 
         return listItemView;
@@ -99,6 +99,9 @@ public class QuakeAdapter extends ArrayAdapter<Quake> {
         SimpleDateFormat timeFormat = new SimpleDateFormat("h:mm a");
         return timeFormat.format(dateObject);
     }
+
+
+
 
     private int getMagnitudeColor(double magnitude){
         int magnitudeColorResourceId;
