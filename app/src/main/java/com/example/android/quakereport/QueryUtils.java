@@ -57,8 +57,9 @@ public class QueryUtils {
                 double magnitude = jobjProperties.getDouble("mag");
                 String place = jobjProperties.getString("place");
                 long time = jobjProperties.getLong("time");
+                String webpage = jobjProperties.getString("url");
 
-                quakes.add(new Quake (magnitude,place,time));
+                quakes.add(new Quake (magnitude,place,time,webpage));
 
             }
             // TODO: Parse the response given by the SAMPLE_JSON_RESPONSE string and

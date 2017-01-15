@@ -9,11 +9,13 @@ public class Quake {
     private String mPlace;
     private long mDate;
     private double mMagnitude;
+    private String mWebpage;
 
-    public Quake(double m , String p, long d) {
+    public Quake(double m , String p, long d, String w) {
         mMagnitude= m;
         mPlace = p;
         mDate = d;
+        mWebpage = w;
 
     }
 
@@ -29,6 +31,10 @@ public class Quake {
         return mPlace;
     }
 
+    public String getmWebpage() {
+        return mWebpage;
+    }
+
     public void setmDate(long mDate) {
         this.mDate = mDate;
     }
@@ -39,6 +45,10 @@ public class Quake {
 
     public void setmPlace(String mPlace) {
         this.mPlace = mPlace;
+    }
+
+    public void setmWebpage(String mWebpage) {
+        this.mWebpage = mWebpage;
     }
 
     @Override
