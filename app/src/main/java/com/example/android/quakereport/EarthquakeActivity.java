@@ -17,6 +17,7 @@ package com.example.android.quakereport;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -28,7 +29,8 @@ import java.util.ArrayList;
 public class EarthquakeActivity extends AppCompatActivity {
 
     public static final String LOG_TAG = EarthquakeActivity.class.getName();
-
+    private static final String USGS_REQUEST_URL =
+            "http://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&orderby=time&minmag=6&limit=10";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,7 +38,14 @@ public class EarthquakeActivity extends AppCompatActivity {
 
         // Create a fake list of earthquake locations.
         // Create a fake list of earthquakes.
-        final ArrayList<Quake> earthquakes = QueryUtils.extractEarthquakes();
+
+
+        new earthquakeAsyncTask().execute(USGS_REQUEST_URL);
+
+
+    }
+
+    private void updateUI(final ArrayList<Quake> earthquakes){
         // Find a reference to the {@link ListView} in the layout
         ListView earthquakeListView = (ListView) findViewById(R.id.list);
 
@@ -47,6 +56,7 @@ public class EarthquakeActivity extends AppCompatActivity {
         // Set the adapter on the {@link ListView}
         // so the list can be populated in the user interface
         earthquakeListView.setAdapter(adapter);
+
 
         //set onItemClickListener
         earthquakeListView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
@@ -62,5 +72,19 @@ public class EarthquakeActivity extends AppCompatActivity {
 
             }
         });
+
+    }
+
+    private class earthquakeAsyncTask extends AsyncTask<String,Void,ArrayList<Quake>>{
+
+        @Override
+        protected ArrayList<Quake> doInBackground(String... strings) {
+            return QueryUtils.fetchEarthquakeData(strings[0]);
+        }
+
+
+        protected void onPostExecute(ArrayList<Quake> quakes) {
+            updateUI(quakes);
+        }
     }
 }
