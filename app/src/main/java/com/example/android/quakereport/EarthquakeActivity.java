@@ -19,12 +19,12 @@ import android.app.LoaderManager;
 import android.content.Intent;
 import android.content.Loader;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +37,7 @@ public class EarthquakeActivity extends AppCompatActivity implements LoaderManag
     private static final String USGS_REQUEST_URL =
             "http://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&orderby=time&minmag=6&limit=10";
     public QuakeAdapter mAdapter;
+    private TextView mEmptyStateTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +53,9 @@ public class EarthquakeActivity extends AppCompatActivity implements LoaderManag
         // Set the adapter on the {@link ListView}
         // so the list can be populated in the user interface
         earthquakeListView.setAdapter(mAdapter);
+
+        mEmptyStateTextView = (TextView) findViewById(R.id.empty_view);
+        earthquakeListView.setEmptyView(mEmptyStateTextView);
 
 
         //set onItemClickListener
@@ -91,6 +95,12 @@ public class EarthquakeActivity extends AppCompatActivity implements LoaderManag
 
     @Override
     public void onLoadFinished(Loader<List<Quake>> loader, List<Quake> quakes) {
+
+        // Hide loading indicator because the data has been loaded
+        View loadingIndicator = findViewById(R.id.loading_indicator);
+        loadingIndicator.setVisibility(View.GONE);
+
+        mEmptyStateTextView.setText(R.string.no_earthquakes);
         // Clear the adapter of previous earthquake data
         mAdapter.clear();
 
@@ -104,25 +114,5 @@ public class EarthquakeActivity extends AppCompatActivity implements LoaderManag
     @Override
     public void onLoaderReset(Loader<List<Quake>> loader) {
 
-    }
-
-    private class earthquakeAsyncTask extends AsyncTask<String, Void, ArrayList<Quake>> {
-
-        @Override
-        protected ArrayList<Quake> doInBackground(String... strings) {
-            return QueryUtils.fetchEarthquakeData(strings[0]);
-        }
-
-
-        protected void onPostExecute(ArrayList<Quake> quakes) {
-            // Clear the adapter of previous earthquake data
-            mAdapter.clear();
-
-            // If there is a valid list of {@link Earthquake}s, then add them to the adapter's
-            // data set. This will trigger the ListView to update.
-            if (quakes != null && !quakes.isEmpty()) {
-                mAdapter.addAll(quakes);
-            }
-        }
     }
 }
